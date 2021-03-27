@@ -1,16 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SignForm } from '../components/sign/SignForm';
 import styled from 'styled-components';
 import signInImage from '../static/img/sign/sign_in.svg';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { authSelector, clearState } from '../api/AuthSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 
 export const SignIn = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { isFetching, isSuccess, isError, errorMessage } = useSelector(authSelector);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearState());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      if(errorMessage === 401) {
+        toast('User with the specified username / password was not found.',  {
+          style: {
+            maxWidth: '500px',
+            background: '#FF5761',
+            color: 'white',
+            borderRadius: '4px',
+            boxShadow: 'none'
+          }
+        });
+      }
+      dispatch(clearState());
+    }
+
+    if (isSuccess) {
+      dispatch(clearState());
+      history.push('/');
+    }
+  }, [isError, isSuccess]);
+  
   return (
     <SignLayout>      
       <SignFormContainer>
         <SignForm typeForm={'Sign In'} />
-
         <SignText>
           <span>Not a member yet?</span> <Link to="signup"> Sign up </Link>
         </SignText>
@@ -57,4 +91,5 @@ SignImg.defaultProps = {
   src: signInImage,
   alt: 'Sign In'
 };
+
 

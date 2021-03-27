@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -13,6 +13,28 @@ export const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isFetching, isSuccess, isError, errorMessage } = useSelector(authSelector);
+
+  useEffect(() => {
+    return () => {
+      // dispatch(clearState());
+      console.log('Произошло что угодно.')
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log('Произошёл успех.')
+      // dispatch(clearState());
+      history.push('/');
+    }
+
+    if (isError) {
+      console.log('Произошла ошибка')
+      console.log(errorMessage);
+      // toast.error(errorMessage);
+      // dispatch(clearState());
+    }
+  }, [isSuccess, isError]);
 
   return (
     <SignLayout>      

@@ -7,12 +7,14 @@ import noHidden from '../../static/img/sign/eye.svg';
 import hidden from '../../static/img/sign/close_eye.svg';
 import check from '../../static/img/sign/check.svg';
 
+import { signupUser, loginUser } from '../../api/AuthSlice';
+
 interface IProps {
   typeForm: string;
 }
 
 interface IFormData {
-  username?: string;
+  UserName?: string;
   login: string;
   password: string;
   checkPassword?: string;
@@ -31,16 +33,16 @@ export const SignForm = (props: IProps) => {
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [hiddenPasswordConfirm, setHiddenPasswordConfirm] = useState(true); 
 
-  console.log(errors);
+  // console.log(errors);
 
   const onSubmit = (data: IFormData) => {
     if(typeForm === 'Sign Up') { 
       console.log('Регистрация пользователя с данными:', data);
-      console.log('error', errors);
-      // dispatch(signupUser(data));
+      dispatch(signupUser(data));
     } else {
       console.log('Авторизация пользователя с данными:', data);
-      // dispatch(signinUser(data));
+      dispatch(loginUser(data));
+      console.log('error', errors);
     }  
   };
 
@@ -50,11 +52,11 @@ export const SignForm = (props: IProps) => {
 
       {typeForm === 'Sign Up' && (
       <FormGroup>
-        <FormLabel htmlFor="username">Name</FormLabel>
-        <FormInput className={errors.username ? 'error' : ''} name="username" ref={register({
+        <FormLabel htmlFor="UserName">Name</FormLabel>
+        <FormInput className={errors.UserName ? 'error' : ''} name="UserName" ref={register({
           required: "You must specify a name",
-        })} id="username" />
-        {errors.username && <FormInputValidate htmlFor="username">{errors.username.message}</FormInputValidate>}            
+        })} id="UserName" />
+        {errors.UserName && <FormInputValidate htmlFor="username">{errors.UserName.message}</FormInputValidate>}            
       </FormGroup>
       )}
 
