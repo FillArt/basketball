@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input';
+import { Checkbox } from '../ui/Checkbox';
 
 import noHidden from '../../static/img/sign/eye.svg';
 import hidden from '../../static/img/sign/close_eye.svg';
@@ -121,14 +122,16 @@ export const SignForm = (props: IProps) => {
       />
       )}
 
-      {typeForm === 'Sign Up' && (    
-      <FormGroupCheck>
-        <FormInput name="agreement" type="checkbox" ref={register({
-          required: "You must be accept the agreement."
-        })} id="agreement" />
-        <FormLabel className={errors.agreement ? 'error' : ''} htmlFor="agreement">I accept the agreement</FormLabel>
-        {errors.agreement && <div><FormInputValidate htmlFor="agreement">{errors.agreement.message}</FormInputValidate></div>}
-      </FormGroupCheck>       
+      {typeForm === 'Sign Up' && (
+        <Checkbox 
+          label="I accept the agreement"
+          name="agreement"
+          error={Boolean(errors.agreement)}
+          register={register({
+            required: true,
+          })}
+          errorMessage={formErrors[String(errors.checkPassword?.type)]}
+        />        
       )}
 
       <FormGroup>
