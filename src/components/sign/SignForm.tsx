@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import Button from '../ui/Button'
+import { Button } from '../ui/Button'
+import { Input } from '../ui/Input';
 
 import noHidden from '../../static/img/sign/eye.svg';
 import hidden from '../../static/img/sign/close_eye.svg';
@@ -16,12 +17,25 @@ interface IProps {
 }
 
 interface IFormData {
-  UserName?: string;
+  UserName?: any;
   login: string;
   password: string;
   checkPassword?: string;
   agreement?: boolean;
 }
+
+interface IFormErrors {
+  [key: string]: string;
+}
+
+const formErrors: IFormErrors = {
+  required: 'Required',
+  pattern: 'Data input is incorrect',
+  minLength: 'Value of at least 3 characters',
+  maxLength: 'The value is too long',
+  validate: 'Password and repeat password are not the same',
+};
+
 
 
 export const SignForm = (props: IProps) => {
@@ -34,8 +48,6 @@ export const SignForm = (props: IProps) => {
   
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [hiddenPasswordConfirm, setHiddenPasswordConfirm] = useState(true); 
-
-  // console.log(errors);
 
   const onSubmit = (data: IFormData) => {
     if(typeForm === 'Sign Up') { 
@@ -53,54 +65,60 @@ export const SignForm = (props: IProps) => {
       <FormTitle>{typeForm}</FormTitle>
 
       {typeForm === 'Sign Up' && (
-      <FormGroup>
-        <FormLabel htmlFor="UserName">Name</FormLabel>
-        <FormInput className={errors.UserName ? 'error' : ''} name="UserName" ref={register({
-          required: "You must specify a name",
-        })} id="UserName" />
-        {errors.UserName && <FormInputValidate htmlFor="username">{errors.UserName.message}</FormInputValidate>}            
-      </FormGroup>
+      <Input
+        label="Name"
+        name="UserName"
+        register={register({
+          required: true,
+        })}
+        type="text"
+        error={Boolean(errors.UserName)}
+        errorMessage={formErrors[String(errors.UserName?.type)]}
+      />
       )}
 
-      <FormGroup>
-        <FormLabel htmlFor="login">Login</FormLabel>
-        <FormInput name="login" className={errors.login ? 'error' : ''} ref={register({
-          required: "You must specify a login",
-        })} id="login" />
-        {errors.login && <FormInputValidate htmlFor="login">{errors.login.message}</FormInputValidate>}            
-      </FormGroup>
+      <Input
+        label="Login"
+        name="login"
+        register={register({
+          required: true,
+        })}
+        type="text"
+        error={Boolean(errors.login)}
+        errorMessage={formErrors[String(errors.login?.type)]}
+      />
 
-      <FormGroup>
-        <FormLabel htmlFor="password">Password</FormLabel>
+      <Input
+        label="Password"
+        name="password"
+        register={register({
+          required: true,
+          minLength: 3,
+        })}
+        type={hiddenPassword ? "password" : "text" }
+        passwordControll={true}
+        error={Boolean(errors.password)}
+        errorMessage={formErrors[String(errors.password?.type)]}
+        hiddenStatus={hiddenPassword}
+        hidden={() => setHiddenPassword(!hiddenPassword)}
+      />
 
-        <FormWrapperPassword>
-          <FormInput name="password" type={hiddenPassword ? 'password' : 'text'} className={errors.password ? 'error' : ''} ref={register({
-            required: "You must specify a password",
-            minLength: {
-              value: 8,
-              message: "Password must have at least 8 characters"
-            }
-          })} id="password" />
-          <FormInputPasswordControl hidden={hiddenPassword} onClick={() => setHiddenPassword(!hiddenPassword)}/>
-        </FormWrapperPassword>
-
-        {errors.password && <FormInputValidate htmlFor="password">{errors.password.message}</FormInputValidate>}            
-      </FormGroup>
 
       {typeForm === 'Sign Up' && (
-      <FormGroup>
-        <FormLabel htmlFor="checkPassword">Enter your password again</FormLabel>
-
-        <FormWrapperPassword>    
-          <FormInput id="checkPassword" name="checkPassword" className={errors.checkPassword ? 'error' : ''} ref={register({
-            validate: value =>
-              value === password.current || "The passwords do not match"
-          })} type={hiddenPasswordConfirm ? 'password' : 'text'} />
-          <FormInputPasswordControl hidden={hiddenPasswordConfirm} onClick={() => setHiddenPasswordConfirm(!hiddenPasswordConfirm)}/>
-        </FormWrapperPassword>
-
-        {errors.checkPassword && <FormInputValidate htmlFor="checkPassword">{errors.checkPassword.message}</FormInputValidate>}            
-      </FormGroup>
+      <Input
+        label="Enter your password again"
+        name="checkPassword"
+        register={register({
+          validate: value =>
+            value === password.current || "The passwords do not match"
+        })}
+        type="password"
+        passwordControll={true}
+        error={Boolean(errors.checkPassword)}
+        errorMessage={formErrors[String(errors.checkPassword?.type)]}
+        hiddenStatus={hiddenPasswordConfirm}
+        hidden={() => setHiddenPasswordConfirm(!hiddenPasswordConfirm)}
+      />
       )}
 
       {typeForm === 'Sign Up' && (    
@@ -114,8 +132,10 @@ export const SignForm = (props: IProps) => {
       )}
 
       <FormGroup>
-        {/* <FormButton disabled={Object.keys(errors).length > 0} type="submit">{ typeForm }</FormButton> */}
-        <Button disable={Object.keys(errors).length > 0} label={typeForm} type={'submit'} />
+        <Button
+          label={typeForm}
+          disable={Object.keys(errors).length > 0} 
+          type={'submit'} />
       </FormGroup>
       
     </FormTemplate>

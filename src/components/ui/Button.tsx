@@ -6,26 +6,24 @@ import addIcon from '../../stories/assets/button/add.svg'
 
 export interface ButtonProps {
   label: string;
-  type: string;
+  type: "submit" | "button" | "reset";
   disable: boolean;
-  add: boolean;
-  cancel: boolean;
+  add?: boolean;
+  cancel?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  label = 'test',
-  type = 'submit',
+  label,
+  type,
   disable = false,
   add = false,
   cancel = false,
 
 }) => {
   return (
-    <React.Fragment>
-      <FormButton className={add ? 'add' : '' || cancel ? 'cancel' : ''} disabled={disable} type={type}>
-        { label } {add && <img src={addIcon} alt="test" />}
-      </FormButton>
-    </React.Fragment>
+    <FormButton className={add ? 'add' : '' || cancel ? 'cancel' : ''} disabled={disable} type={type}>
+      { label } {add && <img src={addIcon} alt="test" />}
+    </FormButton>
   )
 }
 
