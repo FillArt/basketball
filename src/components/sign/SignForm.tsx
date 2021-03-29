@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
+import Button from '../ui/Button'
+
 import noHidden from '../../static/img/sign/eye.svg';
 import hidden from '../../static/img/sign/close_eye.svg';
 import check from '../../static/img/sign/check.svg';
@@ -112,7 +114,8 @@ export const SignForm = (props: IProps) => {
       )}
 
       <FormGroup>
-        <FormButton disabled={Object.keys(errors).length > 0} type="submit">{ typeForm }</FormButton>
+        {/* <FormButton disabled={Object.keys(errors).length > 0} type="submit">{ typeForm }</FormButton> */}
+        <Button disable={Object.keys(errors).length > 0} label={typeForm} type={'submit'} />
       </FormGroup>
       
     </FormTemplate>
