@@ -14,7 +14,7 @@ export interface CheckboxProps {
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
-  label = 'test',
+  label,
   name,
   error = false,
   errorMessage,

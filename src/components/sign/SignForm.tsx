@@ -61,6 +61,8 @@ export const SignForm = (props: IProps) => {
     }  
   };
 
+  console.log(errors);
+
   return (
     <FormTemplate onSubmit={handleSubmit(onSubmit)}>
       <FormTitle>{typeForm}</FormTitle>
@@ -130,7 +132,7 @@ export const SignForm = (props: IProps) => {
           register={register({
             required: true,
           })}
-          errorMessage={formErrors[String(errors.checkPassword?.type)]}
+          errorMessage={formErrors[String(errors.agreement?.type)]}
         />        
       )}
 
