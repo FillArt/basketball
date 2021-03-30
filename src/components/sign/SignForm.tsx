@@ -7,10 +7,6 @@ import { Button } from '../ui/Button'
 import { Input } from '../ui/Input';
 import { Checkbox } from '../ui/Checkbox';
 
-import noHidden from '../../static/img/sign/eye.svg';
-import hidden from '../../static/img/sign/close_eye.svg';
-import check from '../../static/img/sign/check.svg';
-
 import { signupUser, loginUser } from '../../api/AuthSlice';
 
 interface IProps {
@@ -24,6 +20,7 @@ interface IFormData {
   checkPassword?: string;
   agreement?: boolean;
 }
+
 
 interface IFormErrors {
   [key: string]: string;
@@ -60,8 +57,6 @@ export const SignForm = (props: IProps) => {
       console.log('error', errors);
     }  
   };
-
-  console.log(errors);
 
   return (
     <FormTemplate onSubmit={handleSubmit(onSubmit)}>
@@ -164,148 +159,4 @@ const FormGroup = styled.div`
   display: flex;
   margin: 0 0 24px 0;
   flex-direction: column;
-`
-const FormGroupCheck = styled.div`
-  display: flex;
-  margin: 24px 0;
-  flex-direction: column;
-  align-items: flex-start;
-  & input {
-    display: none;
-    z-index: -1;
-    opacity: 0;
-  }
-
-  & input + label {
-    display: inline-flex;
-    align-items: center;
-    user-select: none;
-  }
-
-  & input + label::before {
-    content: '';
-    display: inline-block;
-    transition: 0.3s;
-    cursor: pointer;
-    width: 12px;
-    height: 12px;
-    flex-shrink: 0;
-    flex-grow: 0;
-    border: 1px solid #707070;
-    border-radius: 2px;
-    margin-right: 10px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 70% 70%;
-  }
-
-  & input:checked+label::before {
-    border-color: #E4163A;
-    background-color: #E4163A;
-    background-image: url(${check});
-  }
-
-  & input:not(:disabled):not(:checked)+label:hover::before { 
-    border-color: #E4163A;
-  }
-
-  & input + .error::before {
-    content: '';
-    display: inline-block;
-    cursor: pointer;
-    width: 12px;
-    height: 12px;
-    flex-shrink: 0;
-    flex-grow: 0;
-    border: 1px solid #E4163A;
-    border-radius: 2px;
-    margin-right: 10px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 50% 50%;
-  }
-
-  & label {
-    margin: 0;
-  }
-`
-const FormLabel = styled.label`
-  font-weight: 500;
-  font-size: 14px;
-  color: #707070;
-  margin: 0 0 8px 0;
-  transition: 0.3s;
-  &.error {
-    color: #FF768E;
-  }
-`
-const FormInput = styled.input`
-  width: 100%;
-  box-sizing: border-box;
-  transition: top 1s ease-out 0.5s;
-  font-size: 14px;
-  font-weight: 500;
-  color: #303030;
-  background-color: #F6F6F6;
-  border: none;
-  padding: 8px 33px 8px 12px;
-  border-radius: 4px;
-  transition: 0.3s;
-  &.error {
-    border: 1px solid #FF768E;
-  }
-  &:hover {
-    background-color: #D1D1D1;
-  }
-  &:focus {
-    outline: none;
-    box-shadow: 0px 0px 5px #D9D9D9;
-    &:hover {
-      background: #F6F6F6;
-    }
-  }
-`
-const FormButton = styled.button`
-  width: 100%;
-  background-color: #E4163A;
-  cursor: pointer;
-  color: white;
-  padding: 8px 0;
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 500;
-  transition: 0.3s;
-  &:hover {
-    background-color: #FF5761;
-  }
-  &:active {
-    background-color: #C60E2E;
-  }
-  &:disabled {
-    cursor: not-allowed;
-    background-color: #F6F6F6;
-    color: #D1D1D1;
-  }
-`
-const FormInputValidate = styled.label`
-  margin: 8px 0 0 0;
-  color: #FF768E;
-  font-weight: 500;
-  font-size: 12px;
-`
-const FormWrapperPassword = styled.div`
-  display: inline;
-  position: relative;
-`
-const FormInputPasswordControl = styled.a`
-  position: absolute;
-  display: inline-block;
-  cursor: pointer;
-  top: 25%;
-	right: 12px;
-  background: url(${props => props.hidden ? noHidden : hidden}) 0 0 no-repeat;
-  width: 16px;
-  height: 16px;
 `

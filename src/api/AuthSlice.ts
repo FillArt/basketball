@@ -24,6 +24,8 @@ export const signupUser = createAsyncThunk(
       
       if (response.status === 200) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.name);
+        localStorage.setItem('avatar', data.avatarUrl);
         return { ...data, username: UserName };
       } else {
         return thunkAPI.rejectWithValue(data);
@@ -59,6 +61,8 @@ export const loginUser = createAsyncThunk(
 
       if (response.status === 200) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.name);
+        localStorage.setItem('avatar', data.avatarUrl);
         return data;
       } else {
         return thunkAPI.rejectWithValue(data);
@@ -74,6 +78,7 @@ export const AuthSlice = createSlice({
   name: "auth",
   initialState: {
     username: '',
+    avatar: '',
     login: '',
     isFetching: false,
     isSuccess: false,
@@ -92,35 +97,33 @@ export const AuthSlice = createSlice({
   },
   extraReducers: {
     // Extra reducer comes here
-    [signupUser.fulfilled as any]: (state, { payload }) => {
+    [signupUser.fulfilled.type]: (state, { payload }) => {
       state.isFetching = false;
       state.isSuccess = true;
       state.username = payload.name;
+      state.avatar = payload.avatarUrl;
     },
-    [signupUser.pending as any]: (state) => {
+    [signupUser.pending.type]: (state) => {
       state.isFetching = true;
     },
-    [signupUser.rejected as any]: (state, { payload }) => {
-      console.log('payload', payload);
+    [signupUser.rejected.type]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
-      // state.errorMessage = payload.message;
     },
 
-    [loginUser.fulfilled as any]: (state, { payload }) => {
+    [loginUser.fulfilled.type]: (state, { payload }) => {
       state.username = payload.name;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
     },
-    [loginUser.rejected as any]: (state, { payload }) => {
-      console.log('payload', payload);
+    [loginUser.rejected.type]: (state, { payload }) => {
       state.isFetching = false;
       state.isError = true;
       state.errorMessage = payload.status;
     },
 
-    [loginUser.pending as any]: (state) => {
+    [loginUser.pending.type]: (state) => {
       state.isFetching = true;
     },
   },

@@ -7,24 +7,22 @@ import styled from 'styled-components';
 
 import { SignForm } from '../components/sign/SignForm';
 import signUpImage from '../static/img/sign/sign_up.svg';
-import { authSelector } from '../api/AuthSlice';
+import { authSelector, clearState } from '../api/AuthSlice';
 
 export const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(authSelector);
+  const { isSuccess, isError, errorMessage } = useSelector(authSelector);
 
   useEffect(() => {
     return () => {
-      // dispatch(clearState());
-      console.log('Произошло что угодно.')
+      dispatch(clearState());
     };
   }, []);
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('Произошёл успех.')
-      // dispatch(clearState());
+      dispatch(clearState());
       history.push('/');
     }
 
