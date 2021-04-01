@@ -2,8 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import noHidden from '../../stories/assets/input/eye.svg';
-import hidden from '../../stories/assets/input/close_eye.svg';
+import noHidden from './img/input/eye.svg';
+import hidden from './img/input/close_eye.svg';
 
 export interface InputProps {
   label: string;

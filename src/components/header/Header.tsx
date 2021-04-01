@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import Logo from './img/logo.svg';
 import AvatarNull from './img/profile.svg';
 
-interface Header  {
+interface IProps  {
   name: string | null;
   avatar: string | null;
 }
 
-export const Header: React.FC<Header> = ({
+export const Header: React.FC<IProps> = ({
   name,
   avatar,
 }) => {
@@ -29,6 +29,7 @@ export const Header: React.FC<Header> = ({
 
 const HeaderWrapper = styled.header`
   padding: 16px 50px;
+  z-index: 9;
   box-shadow: 0px 1px 10px rgba(209, 209, 209, 0.5);
   display: flex;
   align-items: center;

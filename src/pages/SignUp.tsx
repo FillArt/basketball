@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SignForm } from '../components/sign/SignForm';
-import signUpImage from '../static/img/sign/sign_up.svg';
+import signUpImage from '../components/sign/img/sign-up.svg';
 import { authSelector, clearState } from '../api/AuthSlice';
 
 export const SignUp = () => {

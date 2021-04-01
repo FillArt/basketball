@@ -2,12 +2,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import addIcon from '../../stories/assets/button/add.svg'
+import addIcon from './img/button/add.svg'
 
 export interface ButtonProps {
   label: string;
   type: "submit" | "button" | "reset";
-  disable: boolean;
+  disable?: boolean;
   add?: boolean;
   cancel?: boolean;
 }

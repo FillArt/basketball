@@ -80,6 +80,7 @@ export const AuthSlice = createSlice({
     username: '',
     avatar: '',
     login: '',
+    
     isFetching: false,
     isSuccess: false,
     isError: false,

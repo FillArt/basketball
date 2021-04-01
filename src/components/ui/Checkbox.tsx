@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import check from '../../stories/assets/chekbox/check.svg'
+import check from './img/chekbox/check.svg'
 
 export interface CheckboxProps {
   label: string;

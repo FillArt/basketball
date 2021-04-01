@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { SignForm } from '../components/sign/SignForm';
 import styled from 'styled-components';
-import signInImage from '../static/img/sign/sign_in.svg';
+import signInImage from '../components/sign/img/sign-in.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { authSelector, clearState } from '../api/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
