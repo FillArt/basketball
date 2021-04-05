@@ -16,8 +16,8 @@ export const getTeams = createAsyncThunk(
               'Content-Type': 'application/json',
             }
           });
+          
       const data = await response.json();
-      console.log('Ответ!!', data);
 
       if (response.status === 200) {
         return { ...data};
@@ -32,6 +32,44 @@ export const getTeams = createAsyncThunk(
   } 
 )
 
+export const addTeam = createAsyncThunk(
+  'teams/addTeam',
+  async ({ name, foundationYear, division, conference, imageUrl}: any, thunkAPI) => {
+    try {
+      const response = await fetch(
+        'http://dev.trainee.dex-it.ru/api/Team/Add',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            foundationYear,
+            division,
+            conference,
+            imageUrl
+          }),
+        }
+      );
+      const data = await response.json();
+      console.log('Добавил команду', data);
+      
+      if (response.status === 200) {
+        return { ...data };
+      } else {
+        console.log(data);
+        return thunkAPI.rejectWithValue(data);
+      }
+
+    } catch (e) {
+      console.log('Error', e.response.data);
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
 
 export const TeamSlice = createSlice({
   name: "team",

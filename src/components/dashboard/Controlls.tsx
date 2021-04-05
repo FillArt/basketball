@@ -1,12 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ReactPaginate from 'react-paginate';
+import paginateStyle from '../../themes/paginate.module.scss';
+import { Arrow } from './padinate/Arrow';
+
 
 export const Controlls = () => {
   return (
     <ControllsContainer>
       <ControllsPaginate>
-        <span>Paginate</span>
+        <ReactPaginate 
+          pageCount={3}
+          pageRangeDisplayed={1}
+          marginPagesDisplayed={2}
+
+          previousLabel={<Arrow type="prev" />}
+          nextLabel={<Arrow type="next" />}
+          breakLabel={<Arrow type="break" />}
+
+          pageClassName={paginateStyle.itemPagination}
+          pageLinkClassName={paginateStyle.itemLinkPagination}
+          containerClassName={paginateStyle.paginationContainer}
+          activeClassName={paginateStyle.activeClassName}  
+        />
       </ControllsPaginate>
       <ControllsSelect>
         <span>Select</span>

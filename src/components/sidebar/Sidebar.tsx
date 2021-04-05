@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Person from './img/person.svg'
@@ -22,20 +22,22 @@ export const Sidebar = (props: IProps) => {
     history.push('/login');
   };
 
+  const location = useLocation();
+
   return (
     <SidebarContainer>
       <SidebarRoute>
         <Link to="/teams">
-          <SidebarNav name={'Team'} link img={Teams}  />
+          <SidebarNav name={'Team'} isActive={location.pathname === '/teams'} link img={Teams}  />
         </Link>  
 
         <Link to="/players">
-          <SidebarNav name={'Players'} link img={Person}  />
+          <SidebarNav name={'Players'} isActive={location.pathname === '/players'} link img={Person}  />
         </Link> 
       </SidebarRoute>
 
       <SidebarLogOut>
-        <SidebarNav name={'Sign out'} img={Logout} logout={onLogOut}  />
+        <SidebarNav name={'Sign out'} button={true} img={Logout} logout={onLogOut}  />
       </SidebarLogOut>
     </SidebarContainer>
     

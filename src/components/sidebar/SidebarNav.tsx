@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import React from 'react';
 import styled from 'styled-components';
 
@@ -6,19 +7,23 @@ export interface SidebarNavProps {
   name: string;
   img: string;
   link?: boolean;
+  button?: boolean;
   logout?: () => void;
+  isActive?: boolean;
 }
 
 export const SidebarNav: React.FC<SidebarNavProps> = ({
   name,
   img,
   logout,
-  link = false
+  link = false,
+  button = false,
+  isActive = false
 }) => {
   return (
-    <SidebarItem onClick={logout}>
-      <img className={link ? 'link' : ''} src={img} alt={name} />
-      <span>{name}</span>
+    <SidebarItem className={ isActive ? 'current' : ''} onClick={logout}>
+      <img className={link ? 'link' : '' } src={img} alt={name} />
+      <span className={button ? 'button-text' : ''}>{name}</span>
     </SidebarItem>
   )  
 }
@@ -31,6 +36,15 @@ const SidebarItem = styled.div`
   align-items: center;
   margin: 0 0 40px 0;
   transition: 0.3s;
+  &.current {
+    & img {
+      filter: none !important;
+      opacity: 1 !important;
+    }
+    & span {
+      color: #E4163A;
+    }
+  }
   &:hover {
     & img {
       &.link {
@@ -53,5 +67,8 @@ const SidebarItem = styled.div`
 
   & span {
     font-size: 12px;
+    &.button-text {
+      color: #FF768E;
+    }
   }
 `  

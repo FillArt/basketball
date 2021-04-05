@@ -1,29 +1,34 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 
 export interface CardProps {
   name: string;
-  year: string;
+  year: number;
   img: string;
+  id: number;
   
 }
 
 export const Card: React.FC<CardProps> = ({
   name,
   img,
-  year
+  year,
+  id
 }) => {
   return (
     <CardContainer>
-      <CardImg>
-        <img src={img} alt=""/>
-      </CardImg>
-      <CardText>
-        <h2>{ name }</h2>
-        <span>Year of foundation: { year }</span>
-      </CardText>
+      <Link to={'/teams/' + id}>
+        <CardImg>
+          <img src={img} alt=""/>
+        </CardImg>
+        <CardText>
+          <h2>{ name }</h2>
+          <span>Year of foundation: { year }</span>
+        </CardText>
+      </Link>
     </CardContainer>
   )
 }
@@ -32,6 +37,9 @@ const CardContainer = styled.div`
   background: rgb(112,112,112);
   background: linear-gradient(90deg, rgba(112,112,112,1) 35%, rgba(57,57,57,1) 100%);
   border-radius: 4px;
+  & a{
+    text-decoration: none;
+  }
 `
 const CardImg = styled.div`
   padding: 65px 0;
@@ -40,15 +48,18 @@ const CardImg = styled.div`
 
 const CardText = styled.div`
   background: #303030;
-  padding: 24px 0;
+  padding: 24px;
   text-align: center;
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
   font-weight: 500;
   & h2 {
     font-size: 18px;
     color: white;
+    margin: 0 0 12px 0;
   }
   & span {
     font-size: 14px;
-    color: 9C9C9C;
+    color: #9C9C9C;
   }
 `

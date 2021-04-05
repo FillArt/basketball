@@ -6,12 +6,11 @@ import styled from 'styled-components';
 import { Header } from '../components/header/Header';
 import { Sidebar } from '../components/sidebar/Sidebar';
 
-
 import { authSelector, clearState } from '../api/AuthSlice';
 import { TeamsList } from '../components/teams/TeamsList'
+import { TeamsAdd } from '../components/teams/TeamsAdd';
+import { TeamInfo } from '../components/teams/TeamInfo';
 
-
-// import { getTeams, teamSelector } from '../api/TeamSlice';
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
@@ -24,10 +23,6 @@ export const Dashboard = () => {
     avatar: localStorage.getItem('avatar'),
   }
 
-
-  // useEffect(() => {
-  //   dispatch(getTeams());
-  // }, [])
 
   useEffect(() => {
     if (isError) {
@@ -43,11 +38,15 @@ export const Dashboard = () => {
 
       <Layout>
         <Sidebar />
+
         <Content>
           <Switch>
-            <Route exact path="/" component={TeamsList} />
+            <Route exact path="/teams" component={TeamsList} />
+            <Route exact path="/teams/add" component={TeamsAdd} />
+            <Route path="/teams/:id" component={TeamInfo} />
           </Switch>
         </Content>
+
       </Layout>
     </Template>  
   )

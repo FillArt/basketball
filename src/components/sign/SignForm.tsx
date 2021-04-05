@@ -49,12 +49,9 @@ export const SignForm = (props: IProps) => {
 
   const onSubmit = (data: IFormData) => {
     if(typeForm === 'Sign Up') { 
-      console.log('Регистрация пользователя с данными:', data);
       dispatch(signupUser(data));
     } else {
-      console.log('Авторизация пользователя с данными:', data);
       dispatch(loginUser(data));
-      console.log('error', errors);
     }  
   };
 

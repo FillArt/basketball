@@ -14,10 +14,9 @@ function App() {
         <Switch>
           <Route exact component={SignIn} path="/login" />
           <Route exact component={SignUp} path="/signup" />
-          <PrivateRoute  path="/"  component={Dashboard}  exact />
+          <PrivateRoute path="/teams" component={Dashboard} />
         </Switch>
       </Router>
-      
     </div>
   );
 }

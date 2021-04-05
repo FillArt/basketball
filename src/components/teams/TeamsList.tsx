@@ -8,30 +8,54 @@ import { Card } from '../dashboard/Card';
 
 import Test from './img/test-logo.svg';
 
-// import { Empty } from '../dashboard/Empty';
+import { Empty } from '../dashboard/Empty';
 
 import { getTeams, teamSelector } from '../../api/TeamSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+export interface ITeam {
+  name: string,
+  foundationYear: number,
+  division: string,
+  conference: string,
+  imageUrl: string,
+  id: number,
+}
 
 export const TeamsList = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(getTeams());
-  }, [])
+  }, []);
+
+  const { teams } = useSelector(teamSelector);
+
+  console.log('Cписок команд', teams);
 
   return (
     <>
-      <Actions />
+      <Actions pathname={'teams'} />
 
       <TeamsContent>
-        {/* <Empty /> */}
-        <TeamsWrapper>
-          <Card img={Test} name={'Portland trail blazers'} year={'2021'} />
-        </TeamsWrapper>
+  
+        { teams.length ?  
+          <TeamsWrapper>
+            {teams.map((team: ITeam) => (
+              <Card img={team.imageUrl} name={team.name} id={team.id}  key={team.id} year={team.foundationYear} />
+            ))}
+          </TeamsWrapper>
+
+          :
+
+          <Empty />
+        }
+
+        
       </TeamsContent>
 
       <Controlls />
+
     </>
   )
 

@@ -31,6 +31,8 @@ const EmptyCard = styled.div`
   & h2 {
     font-size: 36px;
     color: #FF768E;
+    margin: 76px 0 24px 0;
+    font-weight: 800;
   }
   & span {
     font-size: 24px;

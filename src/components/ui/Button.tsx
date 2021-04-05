@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import addIcon from './img/button/add.svg'
@@ -10,6 +11,8 @@ export interface ButtonProps {
   disable?: boolean;
   add?: boolean;
   cancel?: boolean;
+  link?: boolean;
+  linkPath?: string | undefined;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -18,10 +21,18 @@ export const Button: React.FC<ButtonProps> = ({
   disable = false,
   add = false,
   cancel = false,
+  link = false,
+  linkPath
 
 }) => {
+  const history = useHistory()
+  const linkPush = () => {
+    if(link) {
+      history.replace(linkPath + '/add')
+    }
+  }
   return (
-    <FormButton className={add ? 'add' : '' || cancel ? 'cancel' : ''} disabled={disable} type={type}>
+    <FormButton onClick={linkPush} className={add ? 'add' : '' || cancel ? 'cancel' : ''} disabled={disable} type={type}>
       { label } {add && <img src={addIcon} alt="test" />}
     </FormButton>
   )

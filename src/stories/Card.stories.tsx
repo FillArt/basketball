@@ -16,6 +16,6 @@ const Template: Story<CardProps> = (args) => <Card {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   name: 'Testing',
-  year: '1990',
+  year: 1990,
   img: Test
 };

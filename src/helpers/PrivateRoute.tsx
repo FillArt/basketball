@@ -5,7 +5,7 @@ import { Route, Redirect } from  "react-router-dom";
 const  PrivateRoute: React.FC<{
         component: React.FC;
         path: string;
-        exact: boolean;
+        exact?: boolean;
     }> = (props) => {
 
 
