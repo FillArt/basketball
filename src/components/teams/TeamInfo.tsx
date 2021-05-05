@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { Info } from '../dashboard/Info';
 
 import { getTeams, teamSelector } from '../../api/TeamSlice';
+import {typeStateGlobal} from "../../helpers/types";
 
 
 export const TeamInfo = () => {
@@ -15,8 +16,7 @@ export const TeamInfo = () => {
   }, []);
 
 
-  const { teams } = useSelector(teamSelector);
-  const team = teams.find((t: { id: string; }) => t.id == id);
+  const team = useSelector((state: typeStateGlobal) => teamSelector(state, id));
 
   console.log(team);
   

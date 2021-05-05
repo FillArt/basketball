@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {typeStateGlobal} from "../helpers/types";
 
 const token = localStorage.getItem('token');
 
 export const addImg = createAsyncThunk(
   'img/addImg',
-  async (dataImg: any, thunkAPI) => {
+  async (dataImg: string | FormData, thunkAPI) => {
     try {
       const response = await fetch(
         'http://dev.trainee.dex-it.ru/api/Image/SaveImage',
@@ -67,4 +68,4 @@ export const ImgSlice = createSlice({
 
 })
 
-export const imgSelector = (state: any) => state.img;
+export const imgSelector = (state: typeStateGlobal) => state.img;

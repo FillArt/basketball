@@ -1,4 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk, createSelector, SliceCaseReducers} from '@reduxjs/toolkit';
+import {typeStateGlobal} from "../helpers/types";
+import {ITeam, ITeamSlice} from "../helpers/intefaces/storeInterfaces/TeamInterfaces";
+import {IAddTeamInterfaces} from "../helpers/intefaces/requestInterfaces/TeamInterfaces";
 
 const token = localStorage.getItem('token');
 
@@ -34,7 +37,7 @@ export const getTeams = createAsyncThunk(
 
 export const addTeam = createAsyncThunk(
   'teams/addTeam',
-  async ({ name, foundationYear, division, conference, imageUrl}: any, thunkAPI) => {
+  async ({ name, foundationYear, division, conference, logoImg}: IAddTeamInterfaces, thunkAPI) => {
     try {
       const response = await fetch(
         'http://dev.trainee.dex-it.ru/api/Team/Add',
@@ -50,7 +53,7 @@ export const addTeam = createAsyncThunk(
             foundationYear,
             division,
             conference,
-            imageUrl
+            imageUrl: logoImg,
           }),
         }
       );
@@ -71,7 +74,7 @@ export const addTeam = createAsyncThunk(
   }
 );
 
-export const TeamSlice = createSlice({
+export const TeamSlice = createSlice<ITeamSlice, SliceCaseReducers<ITeamSlice>, string>({
   name: "team",
   initialState: {
     teams: [],
@@ -96,12 +99,34 @@ export const TeamSlice = createSlice({
       state.isError = true;
       // state.errorMessage = payload.status;
     },
-
     [getTeams.pending.type]: (state) => {
+      state.isFetching = true;
+    },
+
+
+    [addTeam.fulfilled.type]: (state, { payload }) => {
+      state.teams = payload.data;
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [addTeam.rejected.type]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isError = true;
+    },
+
+    [addTeam.pending.type]: (state) => {
       state.isFetching = true;
     },
   }
 
 })
 
-export const teamSelector = (state: any) => state.team;
+export const teamsAllSelector = (state: typeStateGlobal) => state.team;
+
+export const teamSelector = (state: typeStateGlobal, id: string) => ({teams: state.team.teams, id});
+
+export const currentTeamSelector = createSelector(
+  teamSelector,
+  ({ teams, id }) => teams.find((t: ITeam) => t.id == Number(id)),
+)

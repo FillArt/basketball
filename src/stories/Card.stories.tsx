@@ -17,5 +17,5 @@ export const Default = Template.bind({});
 Default.args = {
   name: 'Testing',
   year: 1990,
-  img: Test
+  imgPath: Test
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react/display-name */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -10,17 +11,18 @@ import Test from './img/test-logo.svg';
 
 import { Empty } from '../dashboard/Empty';
 
-import { getTeams, teamSelector } from '../../api/TeamSlice';
+import { getTeams, teamsAllSelector } from '../../api/TeamSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import {ITeam} from "../../helpers/intefaces/storeInterfaces/TeamInterfaces";
 
-export interface ITeam {
-  name: string,
-  foundationYear: number,
-  division: string,
-  conference: string,
-  imageUrl: string,
-  id: number,
-}
+// export interface ITeam {
+//   name: string,
+//   foundationYear: string,
+//   division: string,
+//   conference: string,
+//   imageUrl: string,
+//   id: string,
+// }
 
 export const TeamsList = () => {
   const dispatch = useDispatch();
@@ -29,7 +31,7 @@ export const TeamsList = () => {
     dispatch(getTeams());
   }, []);
 
-  const { teams } = useSelector(teamSelector);
+  const { teams } = useSelector(teamsAllSelector);
 
   console.log('Cписок команд', teams);
 
@@ -42,7 +44,7 @@ export const TeamsList = () => {
         { teams.length ?  
           <TeamsWrapper>
             {teams.map((team: ITeam) => (
-              <Card img={team.imageUrl} name={team.name} id={team.id}  key={team.id} year={team.foundationYear} />
+              <Card name={team.name} id={team.id}  key={team.id} year={team.foundationYear} imgPath={team.imageUrl} />
             ))}
           </TeamsWrapper>
 

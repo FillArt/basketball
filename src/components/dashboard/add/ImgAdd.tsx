@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +22,7 @@ export const ImgAdd: React.FC<ImgAddProps> = ({
 }) => {
 
   const dispath = useDispatch();
+  const [imgFormat, setImgFormat] = useState('');
   const { imgSrc } = useSelector(imgSelector);
 
 
@@ -29,9 +31,12 @@ export const ImgAdd: React.FC<ImgAddProps> = ({
     const formData = new FormData();
 
     formData.set('file', imgData);
-    // console.log(formData);
     dispath(addImg(formData))
   }
+
+  useEffect(() => {
+    setImgFormat(`http://dev.trainee.dex-it.ru${imgSrc.replace(/"/g, '')}`)
+  }, [imgSrc])
 
   console.log(imgSrc);
 
@@ -40,7 +45,7 @@ export const ImgAdd: React.FC<ImgAddProps> = ({
     <Uploading>
       <input onChange={loadImage} type="file" name={name} ref={register} id={id} />
       <FakeUploading htmlFor={id}>
-        <UploadingButton>
+        <UploadingButton image={imgFormat}>
           <img src={Add} alt=""/>
         </UploadingButton>
       </FakeUploading>
@@ -54,12 +59,10 @@ const Uploading = styled.div`
     display: none;
   }
 `
-const FakeUploading = styled.label`
-background: url(${(props :any) => props.test}) 0 0 no-repeat;
-
-`
-const UploadingButton = styled.div`
+const FakeUploading = styled.label``
+const UploadingButton = styled.div<{image: string;}>`
   cursor: pointer;
+  background: url(${(props: { image: any; }) => props.image}) center center no-repeat;
   background-color: #9C9C9C;
   border-radius: 10px;
   align-items: center;

@@ -16,13 +16,13 @@ export const SignUp = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(clearState());
+      dispatch(clearState({}));
     };
   }, []);
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(clearState());
+      dispatch(clearState({}));
       history.push('/');
     }
 
@@ -39,7 +39,7 @@ export const SignUp = () => {
       <SignFormContainer>
         <SignForm typeForm={'Sign Up'} />
         <SignText>
-          <span>Already a member?</span> <Link to="login">Sign in</Link>
+          <span>Already a member?</span> <Link to="/">Sign in</Link>
         </SignText>
       </SignFormContainer>
       

@@ -3,18 +3,22 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
+import {theme } from '../../themes/theme'
+
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input';
 import { Checkbox } from '../ui/Checkbox';
 
 import { signupUser, loginUser } from '../../api/AuthSlice';
+import {useHistory} from "react-router";
+import {routePaths} from "../../helpers/constants/routePath";
 
 interface IProps {
   typeForm: string;
 }
 
 interface IFormData {
-  UserName?: any;
+  UserName: string;
   login: string;
   password: string;
   checkPassword?: string;
@@ -38,6 +42,7 @@ const formErrors: IFormErrors = {
 
 export const SignForm = (props: IProps) => {
   const { typeForm } = props;
+  const history = useHistory();
   const { register, errors, handleSubmit, watch } = useForm<IFormData>();
   const dispatch = useDispatch();
 
@@ -47,11 +52,16 @@ export const SignForm = (props: IProps) => {
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [hiddenPasswordConfirm, setHiddenPasswordConfirm] = useState(true); 
 
+  const changeRouteSucces = () => {
+      console.log('ИРЕКТ!!!!!')
+      history.replace(routePaths.teams);
+  }
+
   const onSubmit = (data: IFormData) => {
     if(typeForm === 'Sign Up') { 
-      dispatch(signupUser(data));
+      dispatch(signupUser({data, redirect: changeRouteSucces }));
     } else {
-      dispatch(loginUser(data));
+      dispatch(loginUser({data, redirect: changeRouteSucces }));
     }  
   };
 
@@ -148,7 +158,8 @@ const FormTemplate = styled.form`
 const FormTitle = styled.h2`
   font-size: 36px;
   color: #344472;
-  font-weight: 400;
+  font-weight: 400;н
+
   margin: 0 0 32px;
 `
 

@@ -1,15 +1,21 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Input } from '../../ui/Input';
 import { Button } from '../../ui/Button'
+import { Selector } from '../../ui/Selector'
+
+// import Select from 'react-select'
 
 
 
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ImgAdd } from './ImgAdd';
+import { imgSelector } from '../../../api/ImgSlice';
+import { addTeam } from '../../../api/TeamSlice';
 
 interface IFormErrors {
   [key: string]: string;
@@ -23,70 +29,154 @@ const formErrors: IFormErrors = {
   validate: 'Password and repeat password are not the same',
 };
 
-
+export interface IProps {
+  type: 'team' | 'player'
+}
 export interface IFormAdd {
   name: string,
   foundationYear: number,
   division: string,
   conference: string,
-  imageUrl: string | null
+  imageUrl: string,
 }
 
-export const FormAdd = () => {
+export const FormAdd: React.FC<IProps> = ({
+  type = 'team',
+}) => {
 
+  const dispath = useDispatch()
   const { register, errors, handleSubmit } = useForm();
+  const { imgSrc } = useSelector(imgSelector);
+
+  const [logoImg, setLogoImg] = useState<string>('');
+
+  useEffect(()=> {
+    setLogoImg(imgSrc.replace(/"/g, ''))
+  }, [imgSrc])
+  
+
   const onSubmit = (data: IFormAdd) => {
-    console.log(data)
+    if(type === 'team') {
+      dispath(addTeam({...data, logoImg}))
+      console.log({...data, logoImg});
+    } else if(type === 'player') {
+      console.log('Игрок добавлен!')
+    }
+    
   }
   
+
   return (
     <Form method="post" encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
-
-      <ImgAdd name="imageUrl" id="teams__img" register={register()} />
-      <FormData>
+      <ImgAdd name="imageUrl" id="teams__img" />
+      <FormData> 
         <Input
           label="Name"
-          name="newName"
+          name="name"
           register={register({
             required: true,
           })}
           type="text"
-          error={Boolean(errors.newName)}
-          errorMessage={formErrors[String(errors.newName?.type)]}
+          error={Boolean(errors.name)}
+          errorMessage={formErrors[String(errors.name?.type)]}
         />
 
-        <Input
-          label="Division"
-          name="newDivision"
-          register={register({
-            required: true,
-          })}
-          type="text"
-          error={Boolean(errors.newDivision)}
-          errorMessage={formErrors[String(errors.newDivision?.type)]}
-        />
+        {type === 'player' && (
+          <>
 
-        <Input
-          label="Conference"
-          name="newConference"
-          register={register({
-            required: true,
-          })}
-          type="text"
-          error={Boolean(errors.newConference)}
-          errorMessage={formErrors[String(errors.newConference?.type)]}
-        />
+            <Selector text="test" />
+            <Selector test="test" />
 
-        <Input
-          label="Year of foundation"
-          name="newYear"
-          register={register({
-            required: true,
-          })}
-          type="text"
-          error={Boolean(errors.newYear)}
-          errorMessage={formErrors[String(errors.newYear?.type)]}
-        />
+            <PlayerParameters>
+              <PlayerParametersItem>
+                <Input
+                  label="Height (cm)"
+                  name="height"
+                  register={register({
+                    required: true,
+                  })}
+                  type="text"
+                  error={Boolean(errors.height)}
+                  errorMessage={formErrors[String(errors.height?.type)]}
+                />
+              </PlayerParametersItem>
+              <PlayerParametersItem>
+                <Input
+                  label="Weight (kg)"
+                  name="weight"
+                  register={register({
+                    required: true,
+                  })}
+                  type="text"
+                  error={Boolean(errors.weight)}
+                  errorMessage={formErrors[String(errors.weight?.type)]}
+                />
+              </PlayerParametersItem>
+              <PlayerParametersItem>
+                <Input
+                  label="Birthday"
+                  name="birthday"
+                  register={register({
+                    required: true,
+                  })}
+                  type="text"
+                  error={Boolean(errors.birthday)}
+                  errorMessage={formErrors[String(errors.birthday?.type)]}
+                />
+              </PlayerParametersItem>
+              <PlayerParametersItem>
+                <Input
+                  label="Number"
+                  name="number"
+                  register={register({
+                    required: true,
+                  })}
+                  type="text"
+                  error={Boolean(errors.number)}
+                  errorMessage={formErrors[String(errors.number?.type)]}
+                />
+              </PlayerParametersItem>
+            </PlayerParameters>
+          </>
+        )}
+
+        {type === 'team' && (
+          <>
+            <Input
+              label="Division"
+              name="division" 
+              register={register({
+                required: true,
+              })}
+              type="text"
+              error={Boolean(errors.division)}
+              errorMessage={formErrors[String(errors.division?.type)]}
+            />
+
+            <Input
+              label="Conference"
+              name="conference"
+              register={register({
+                required: true,
+              })}
+              type="text"
+              error={Boolean(errors.conference)}
+              errorMessage={formErrors[String(errors.conference?.type)]}
+            />
+
+            <Input
+              label="Year of foundation"
+              name="foundationYear"
+              register={register({
+                required: true,
+              })}
+              type="text"
+              error={Boolean(errors.foundationYear)}
+              errorMessage={formErrors[String(errors.foundationYear?.type)]}
+            />
+          </>
+        )}
+        
         <ButtonContainer>
             <Button
               cancel
@@ -115,4 +205,13 @@ const FormData = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 24px;
+`
+const PlayerParameters = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap-x: 24px;
+`
+const PlayerParametersItem = styled.div`
+  width: 46%;
 `

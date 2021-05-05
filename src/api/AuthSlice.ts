@@ -1,8 +1,11 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, SliceCaseReducers } from '@reduxjs/toolkit';
+import {typeStateGlobal} from "../helpers/types";
+import { ISignUp, ILoginUser } from "../helpers/intefaces/requestInterfaces/AuthInterfaces";
+import { IAuthSlice } from "../helpers/intefaces/storeInterfaces/AuthInterfaces";
 
 export const signupUser = createAsyncThunk(
   'auth/signupUser',
-  async ({ UserName, login, password}: any, thunkAPI) => {
+  async ({data: { UserName, login, password}, redirect}: {data: ISignUp, redirect: () => void}, thunkAPI) => {
     try {
       const response = await fetch(
         'http://dev.trainee.dex-it.ru/api/Auth/SignUp',
@@ -30,7 +33,7 @@ export const signupUser = createAsyncThunk(
       } else {
         return thunkAPI.rejectWithValue(data);
       }
-
+      redirect()
     } catch (e) {
       console.log('Error', e.response.data);
       return thunkAPI.rejectWithValue(e.response.data);
@@ -40,7 +43,7 @@ export const signupUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   'users/login',
-  async ({ login, password }: any, thunkAPI) => {
+  async ({data: { login, password }, redirect}: { data: ILoginUser, redirect: () => void }, thunkAPI) => {
     try {
       const response = await fetch(
         'http://dev.trainee.dex-it.ru/api/Auth/SignIn',
@@ -67,6 +70,7 @@ export const loginUser = createAsyncThunk(
       } else {
         return thunkAPI.rejectWithValue(data);
       }
+      redirect();
     } catch (e) {
       console.log('Error', e.response.data);
       thunkAPI.rejectWithValue(e.response.data);
@@ -74,7 +78,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const AuthSlice = createSlice({
+export const AuthSlice = createSlice<IAuthSlice, SliceCaseReducers<IAuthSlice>, string>({
   name: "auth",
   initialState: {
     username: '',
@@ -130,5 +134,6 @@ export const AuthSlice = createSlice({
   },
 })
 
-export const authSelector = (state: any) => state.auth;
+export const authErrorSelector = (state: typeStateGlobal) => state.auth.isError;
+export const authSelector = (state: typeStateGlobal) => state.auth;
 export const { clearState } = AuthSlice.actions;

@@ -7,14 +7,14 @@ import styled from 'styled-components';
 export interface CardProps {
   name: string;
   year: number;
-  img: string;
+  imgPath: string | FormData;
   id: number;
   
 }
 
 export const Card: React.FC<CardProps> = ({
   name,
-  img,
+  imgPath,
   year,
   id
 }) => {
@@ -22,7 +22,7 @@ export const Card: React.FC<CardProps> = ({
     <CardContainer>
       <Link to={'/teams/' + id}>
         <CardImg>
-          <img src={img} alt=""/>
+          <img src={'http://dev.trainee.dex-it.ru' + imgPath} alt=""/>
         </CardImg>
         <CardText>
           <h2>{ name }</h2>
@@ -34,6 +34,7 @@ export const Card: React.FC<CardProps> = ({
 }
 
 const CardContainer = styled.div`
+  position: relative;
   background: rgb(112,112,112);
   background: linear-gradient(90deg, rgba(112,112,112,1) 35%, rgba(57,57,57,1) 100%);
   border-radius: 4px;
@@ -44,6 +45,10 @@ const CardContainer = styled.div`
 const CardImg = styled.div`
   padding: 65px 0;
   text-align: center;
+  min-height: calc(100% - 98px);
+  & img {
+    max-width: 150px;
+  }
 `
 
 const CardText = styled.div`

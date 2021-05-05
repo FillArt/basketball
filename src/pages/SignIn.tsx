@@ -3,7 +3,7 @@ import { SignForm } from '../components/sign/SignForm';
 import styled from 'styled-components';
 import signInImage from '../components/sign/img/sign-in.svg';
 import { Link, useHistory } from 'react-router-dom';
-import { authSelector, clearState } from '../api/AuthSlice';
+import { authErrorSelector, clearState, authSelector } from '../api/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -11,17 +11,20 @@ import toast from 'react-hot-toast';
 export const SignIn = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isFetching, isSuccess, isError, errorMessage } = useSelector(authSelector);
+  const isError = useSelector(authErrorSelector);
+  const { isFetching, isSuccess, errorMessage } = useSelector(authSelector);
+
+  //
 
   useEffect(() => {
     return () => {
-      dispatch(clearState());
+      dispatch(clearState({}));
     };
   }, []);
 
   useEffect(() => {
     if (isError) {
-      if(errorMessage === 401) {
+      if(errorMessage === '401') {
         toast('User with the specified username / password was not found.',  {
           style: {
             maxWidth: '500px',
@@ -32,11 +35,11 @@ export const SignIn = () => {
           }
         });
       }
-      dispatch(clearState());
+      dispatch(clearState({}));
     }
 
     if (isSuccess) {
-      dispatch(clearState());
+      dispatch(clearState({}));
       history.push('/');
     }
   }, [isError, isSuccess]);

@@ -13,7 +13,7 @@ export const TeamsAdd = () => {
   return(
     <Container>
       <HeaderAdd pathname={'teams'} type={'add'} />
-      <FormAdd />
+      <FormAdd type={'player'} />
     </Container>
   )
 }

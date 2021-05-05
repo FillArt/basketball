@@ -4,9 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from './app/store'
+import reducer from './app/store'
 import toast, { Toaster } from 'react-hot-toast';
+import {configureStore} from "@reduxjs/toolkit";
 
+const store = configureStore({reducer})
 
 ReactDOM.render(
   <React.StrictMode>
