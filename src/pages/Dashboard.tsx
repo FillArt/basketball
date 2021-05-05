@@ -74,5 +74,5 @@ const Content = styled.main`
   flex-direction: column;
   flex-grow: 1;
   padding: 32px 80px;
-  background-color: #F6F6F6;
+  background-color: ${({theme}) => theme.colors.lightestGrey};
 `

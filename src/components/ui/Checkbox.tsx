@@ -56,7 +56,7 @@ const FormGroupCheck = styled.div`
     height: 12px;
     flex-shrink: 0;
     flex-grow: 0;
-    border: 1px solid #707070;
+    border: 1px solid ${({theme}) => theme.colors.middleGrey};;
     border-radius: 2px;
     margin-right: 10px;
     background-repeat: no-repeat;
@@ -65,13 +65,13 @@ const FormGroupCheck = styled.div`
   }
 
   & input:checked+label::before {
-    border-color: #E4163A;
-    background-color: #E4163A;
+    border-color: ${({theme}) => theme.colors.red};
+    background-color: ${({theme}) => theme.colors.red};
     background-image: url(${check});
   }
 
   & input:not(:disabled):not(:checked)+label:hover::before { 
-    border-color: #E4163A;
+    border-color :${({theme}) => theme.colors.red};
   }
 
   & input + .error::before {
@@ -82,7 +82,7 @@ const FormGroupCheck = styled.div`
     height: 12px;
     flex-shrink: 0;
     flex-grow: 0;
-    border: 1px solid #E4163A;
+    border: 1px solid ${({theme}) => theme.colors.red};
     border-radius: 2px;
     margin-right: 10px;
     background-repeat: no-repeat;
@@ -100,39 +100,39 @@ const FormInput = styled.input`
   transition: top 1s ease-out 0.5s;
   font-size: 14px;
   font-weight: 500;
-  color: #303030;
-  background-color: #F6F6F6;
+  color: ${({theme}) => theme.colors.darkGrey};
+  background-color: ${({theme}) => theme.colors.lightestGrey};
   border: none;
   padding: 8px 33px 8px 12px;
   border-radius: 4px;
   transition: 0.3s;
   &.error {
-    border: 1px solid #FF768E;
+    border: 1px solid ${({theme}) => theme.colors.lightestRed};
   }
   &:hover {
-    background-color: #D1D1D1;
+    background-color: ${({theme}) => theme.colors.lightGrey};
   }
   &:focus {
     outline: none;
     box-shadow: 0px 0px 5px #D9D9D9;
     &:hover {
-      background: #F6F6F6;
+      background: ${({theme}) => theme.colors.lightestGrey};
     }
   }
 `
 const FormLabel = styled.label`
   font-weight: 500;
   font-size: 14px;
-  color: #707070;
+  color: ${({theme}) => theme.colors.middleGrey};
   margin: 0 0 8px 0;
   transition: 0.3s;
   &.error {
-    color: #FF768E;
+    color: ${({theme}) => theme.colors.lightestRed};
   }
 `
 const FormInputValidate = styled.label`
   margin: 8px 0 0 0;
-  color: #FF768E;
+  color: ${({theme}) => theme.colors.lightestRed};
   font-weight: 500;
   font-size: 12px;
 `

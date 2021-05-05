@@ -65,6 +65,6 @@ const CardText = styled.div`
   }
   & span {
     font-size: 14px;
-    color: #9C9C9C;
+    color: ${({theme}) => theme.colors.grey};
   }
 `

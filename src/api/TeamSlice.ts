@@ -14,7 +14,7 @@ export const getTeams = createAsyncThunk(
           {
             method: 'GET',
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
               Accept: 'application/json',
               'Content-Type': 'application/json',
             }

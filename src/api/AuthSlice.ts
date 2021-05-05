@@ -47,7 +47,7 @@ export const loginUser = createAsyncThunk(
   async ({data: { login, password }, redirect}: { data: ILoginUser, redirect: () => void }, thunkAPI) => {
     try {
       const response = await userLogin('Auth/SignIn', JSON.stringify({login, password}));
-        console.log('responce', response);
+        console.log('response', response);
 
         localStorage.setItem('token', response.token);
         localStorage.setItem('username', response.name);
@@ -56,7 +56,8 @@ export const loginUser = createAsyncThunk(
         redirect();
         return response;
     } catch (e) {
-      console.log('Error', e.response.data);
+      console.log('Error', e);
+      thunkAPI.rejectWithValue(e);
     }
   }
 );
@@ -105,10 +106,10 @@ export const AuthSlice = createSlice<IAuthSlice, SliceCaseReducers<IAuthSlice>, 
       state.isSuccess = true;
       return state;
     },
-    [loginUser.rejected.type]: (state, { payload }) => {
+    [loginUser.rejected.type]: (state, action) => {
       state.isFetching = false;
       state.isError = true;
-      state.errorMessage = payload.status;
+      state.errorMessage = action.payload.status;
     },
 
     [loginUser.pending.type]: (state) => {

@@ -27,7 +27,7 @@ export const request = async (url: string, data: IData,  contentType: string, to
     if (response.status === 200) {
         return dataResponce;
     } else {
-        console.log('response error', dataResponce);
+        throw dataResponce;
     }
 }
 

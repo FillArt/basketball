@@ -72,17 +72,17 @@ const SignFormContainer = styled.div`
   align-items: center;
 `
 const SignImgComtainer = styled.div`
-  background: #F5FBFF;
+  background: ${({theme}) => theme.colors.lightBlue};
   display: flex;
   justify-content: center;
   align-items: center;
 `
 const SignText = styled.div`
   font-size: 14px;
-  color: #707070;
+  color: ${({theme}) => theme.colors.middleGrey};
   font-weight: 500;
   & a {
-    color: #E4163A;
+    color: ${({theme}) => theme.colors.red};
   }
 `
 

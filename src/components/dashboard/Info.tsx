@@ -19,7 +19,7 @@ export const Info: React.FC<IInfoProps> = ({team}) => {
 
 const Container = styled.div`
   border-radius: 10px;
-  background: #FFFFFF;
+  background: ${({theme}) => theme.colors.white};
   max-width: 1140px;
   width: 100%;
   margin: 0 auto;

@@ -41,7 +41,7 @@ export const Button: React.FC<ButtonProps> = ({
 
 const FormButton = styled.button`
   width: 100%; 
-  background-color:  #E4163A;
+  background-color:  ${({theme}) => theme.colors.red};
   cursor: pointer;
   color: white;
   padding: 8px 24px;
@@ -52,15 +52,15 @@ const FormButton = styled.button`
   font-weight: 500;
   transition: 0.3s;
   &:hover {
-    background-color: #FF5761;
+    background-color: ${({theme}) => theme.colors.lightRed};
   }
   &:active {
-    background-color: #C60E2E;
+    background-color: ${({theme}) => theme.colors.darkRed};
   }
   &:disabled {
     cursor: not-allowed;
-    background-color: #F6F6F6;
-    color: #D1D1D1;
+    background-color: ${({theme}) => theme.colors.lightestGrey};
+    color: ${({theme}) => theme.colors.lightGrey};
   }
 
   &.add {
@@ -73,20 +73,20 @@ const FormButton = styled.button`
 
   &.cancel {
     max-width: 171px;
-    border: 1px solid #9C9C9C;
+    border: 1px solid ${({theme}) => theme.colors.grey};
     background-color: transparent;
     color: #9C9C9C;
     &:hover {
-      background-color: #D1D1D1;
+      background-color: ${({theme}) => theme.colors.lightGrey};
     }
     &:active {
-      background-color: #9C9C9C;
-      color: #707070;
+      background-color: ${({theme}) => theme.colors.grey};
+      color: ${({theme}) => theme.colors.middleGrey};
     }
     &:disabled {
       cursor: not-allowed;
-      background-color: #F6F6F6;
-      color: #D1D1D1;
+      background-color: ${({theme}) => theme.colors.lightestGrey};
+      color: ${({theme}) => theme.colors.lightGrey};
     }
   }
 `

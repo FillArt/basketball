@@ -26,7 +26,7 @@ const TextLabel = styled.label`
   display: block;
   font-weight: 500;
   font-size: 14px;
-  color: #707070;
+  color: ${({theme}) => theme.colors.middleGrey};
   margin: 0 0 8px 0;
   -webkit-transition: 0.3s;
   transition: 0.3s;

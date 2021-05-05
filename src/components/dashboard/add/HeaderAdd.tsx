@@ -29,7 +29,7 @@ const Header = styled.div`
   justify-content: space-between;
   padding: 32px 24px;
   & a {
-    color: #E4163A;
+    color: ${({theme}) => theme.colors.red};
     text-decoration: none;
   }
 `

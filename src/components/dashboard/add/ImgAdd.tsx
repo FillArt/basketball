@@ -63,7 +63,7 @@ const FakeUploading = styled.label``
 const UploadingButton = styled.div<{image: string;}>`
   cursor: pointer;
   background: url(${(props: { image: any; }) => props.image}) center center no-repeat;
-  background-color: #9C9C9C;
+  background-color: ${({theme}) => theme.colors.grey};
   border-radius: 10px;
   align-items: center;
   justify-content: center;

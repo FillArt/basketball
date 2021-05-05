@@ -42,7 +42,7 @@ const SidebarItem = styled.div`
       opacity: 1 !important;
     }
     & span {
-      color: #E4163A;
+      color: ${({theme}) => theme.colors.red};
     }
   }
   &:hover {
@@ -68,7 +68,7 @@ const SidebarItem = styled.div`
   & span {
     font-size: 12px;
     &.button-text {
-      color: #FF768E;
+      color: ${({theme}) => theme.colors.lightestRed};
     }
   }
 `  

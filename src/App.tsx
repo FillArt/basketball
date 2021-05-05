@@ -17,8 +17,7 @@ function App() {
           <Route exact component={SignIn} path={`${routePaths.signIn}`} />
           <Route component={SignUp} path={`${routePaths.signUp}`} />
 
-          <PrivateRoute path={`${routePaths.teams}`} component={Dashboard} />
-          <Route component={SignIn} />
+          <PrivateRoute component={Dashboard} />
         </Switch>
       </Router>
     </div>

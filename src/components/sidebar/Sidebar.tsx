@@ -51,7 +51,7 @@ const SidebarContainer = styled.aside`
   flex-shrink: 0;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #FFFFFF;
+  background-color: ${({theme}) => theme.colors.white};
   box-sizing: border-box;
   transition: 0.7s ease-out;
 `
@@ -62,9 +62,9 @@ const SidebarRoute = styled.div`
     font-weight: 500;
     text-decoration: none;
     margin: 0 0 40px 0;
-    color: #9C9C9C;
+    color: ${({theme}) => theme.colors.grey};
     &:hover {
-      color: #E4163A;
+      color: ${({theme}) => theme.colors.red};
     }
     &:last-child {
       margin: 0;

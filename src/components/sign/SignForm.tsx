@@ -157,8 +157,8 @@ const FormTemplate = styled.form`
 
 const FormTitle = styled.h2`
   font-size: 36px;
-  color: #344472;
-  font-weight: 400;н
+  color: ${({theme}) => theme.colors.blue};
+  font-weight: 400;
 
   margin: 0 0 32px;
 `

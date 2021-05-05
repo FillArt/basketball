@@ -30,12 +30,12 @@ const EmptyCard = styled.div`
   margin: 0 auto;
   & h2 {
     font-size: 36px;
-    color: #FF768E;
+    color: ${({theme}) => theme.colors.lightestRed};
     margin: 76px 0 24px 0;
     font-weight: 800;
   }
   & span {
     font-size: 24px;
-    color: #707070;
+    color: ${({theme}) => theme.colors.middleGrey};
   }
 `

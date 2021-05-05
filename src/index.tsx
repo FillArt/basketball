@@ -8,13 +8,18 @@ import reducer from './app/store'
 import toast, { Toaster } from 'react-hot-toast';
 import {configureStore} from "@reduxjs/toolkit";
 
+import { ThemeProvider } from 'styled-components'
+import { theme } from './themes/theme'
+
 const store = configureStore({reducer})
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
-      <Toaster position="top-right" reverseOrder={true} />
+        <ThemeProvider theme={theme}>
+            <App />
+            <Toaster position="top-right" reverseOrder={true} />
+        </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
