@@ -29,11 +29,11 @@ export const signupUser = createAsyncThunk(
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.name);
         localStorage.setItem('avatar', data.avatarUrl);
+        redirect();
         return { ...data, username: UserName };
       } else {
         return thunkAPI.rejectWithValue(data);
       }
-      redirect()
     } catch (e) {
       console.log('Error', e.response.data);
       return thunkAPI.rejectWithValue(e.response.data);
@@ -66,11 +66,14 @@ export const loginUser = createAsyncThunk(
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.name);
         localStorage.setItem('avatar', data.avatarUrl);
+        redirect();
         return data;
       } else {
         return thunkAPI.rejectWithValue(data);
       }
-      redirect();
+      // console.log('nут возможно редирект', redirect)
+
+
     } catch (e) {
       console.log('Error', e.response.data);
       thunkAPI.rejectWithValue(e.response.data);
