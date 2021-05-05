@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, SliceCaseReducers } from '@reduxjs/toolk
 import {typeStateGlobal} from "../helpers/types";
 import { ISignUp, ILoginUser } from "../helpers/intefaces/requestInterfaces/AuthInterfaces";
 import { IAuthSlice } from "../helpers/intefaces/storeInterfaces/AuthInterfaces";
+import { userLogin } from "./request/auth";
 
 export const signupUser = createAsyncThunk(
   'auth/signupUser',
@@ -45,38 +46,17 @@ export const loginUser = createAsyncThunk(
   'users/login',
   async ({data: { login, password }, redirect}: { data: ILoginUser, redirect: () => void }, thunkAPI) => {
     try {
-      const response = await fetch(
-        'http://dev.trainee.dex-it.ru/api/Auth/SignIn',
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            login,
-            password,
-          }),
-        }
-      );
-      const data = await response.json();
-      console.log('response', data);
+      const response = await userLogin('Auth/SignIn', JSON.stringify({login, password}));
+        console.log('responce', response);
 
-      if (response.status === 200) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.name);
-        localStorage.setItem('avatar', data.avatarUrl);
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('username', response.name);
+        localStorage.setItem('avatar', response.avatarUrl);
+
         redirect();
-        return data;
-      } else {
-        return thunkAPI.rejectWithValue(data);
-      }
-      // console.log('nут возможно редирект', redirect)
-
-
+        return response;
     } catch (e) {
       console.log('Error', e.response.data);
-      thunkAPI.rejectWithValue(e.response.data);
     }
   }
 );
