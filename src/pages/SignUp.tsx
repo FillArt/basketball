@@ -7,12 +7,14 @@ import styled from 'styled-components';
 
 import { SignForm } from '../components/sign/SignForm';
 import signUpImage from '../components/sign/img/sign-up.svg';
-import { authSelector, clearState } from '../api/AuthSlice';
+import {authErrorSelector, authSelector, clearState} from '../api/AuthSlice';
+import {toast} from "react-hot-toast";
 
 export const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isSuccess, isError, errorMessage } = useSelector(authSelector);
+  const { isSuccess, errorMessage } = useSelector(authSelector);
+  const isError = useSelector(authErrorSelector);
 
   useEffect(() => {
     return () => {
@@ -27,9 +29,8 @@ export const SignUp = () => {
     }
 
     if (isError) {
-      console.log('Произошла ошибка')
       console.log(errorMessage);
-      // toast.error(errorMessage);
+      toast.error(errorMessage);
       // dispatch(clearState());
     }
   }, [isSuccess, isError]);
