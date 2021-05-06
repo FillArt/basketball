@@ -2,8 +2,28 @@ import {createSlice, createAsyncThunk, createSelector, SliceCaseReducers} from '
 import {typeStateGlobal} from "../helpers/types";
 import {ITeam, ITeamSlice} from "../helpers/intefaces/storeInterfaces/TeamInterfaces";
 import {IAddTeamInterfaces} from "../helpers/intefaces/requestInterfaces/TeamInterfaces";
+import {teamsAdd} from "./request/team";
+// import {teamsAdd} from "./request/team";
+
 
 const token = localStorage.getItem('token');
+
+export const addTeam = createAsyncThunk(
+    'teams/addTeam',
+  async ({ name, foundationYear, division, conference, logoImg}: IAddTeamInterfaces, thunkAPI) => {
+      try {
+        const response = await teamsAdd('Team/Add',  JSON.stringify({name, foundationYear, division, conference, logoImg}), String(localStorage.getItem('token')) );
+        console.log('Team Add', response);
+        return { ...response };
+
+      } catch (e) {
+        console.log('Error', e.response.data);
+//       return thunkAPI.rejectWithValue(e.response.data);
+      }
+  }
+);
+
+
 
 export const getTeams = createAsyncThunk(
   'teams/getTeams',
@@ -19,7 +39,7 @@ export const getTeams = createAsyncThunk(
               'Content-Type': 'application/json',
             }
           });
-          
+
       const data = await response.json();
 
       if (response.status === 200) {
@@ -32,47 +52,10 @@ export const getTeams = createAsyncThunk(
       console.log('Error', e.response.data);
       // return thunkAPI.rejectWithValue(e.response.data);
     }
-  } 
+  }
 )
 
-export const addTeam = createAsyncThunk(
-  'teams/addTeam',
-  async ({ name, foundationYear, division, conference, logoImg}: IAddTeamInterfaces, thunkAPI) => {
-    try {
-      const response = await fetch(
-        'http://dev.trainee.dex-it.ru/api/Team/Add',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name,
-            foundationYear,
-            division,
-            conference,
-            imageUrl: logoImg,
-          }),
-        }
-      );
-      const data = await response.json();
-      console.log('Добавил команду', data);
-      
-      if (response.status === 200) {
-        return { ...data };
-      } else {
-        console.log(data);
-        return thunkAPI.rejectWithValue(data);
-      }
 
-    } catch (e) {
-      console.log('Error', e.response.data);
-      return thunkAPI.rejectWithValue(e.response.data);
-    }
-  }
-);
 
 export const TeamSlice = createSlice<ITeamSlice, SliceCaseReducers<ITeamSlice>, string>({
   name: "team",
