@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { authErrorSelector, clearState, authSelector } from '../api/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-
+import { routePaths } from '../helpers/constants/routePath';
 
 export const SignIn = () => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ export const SignIn = () => {
       <SignFormContainer>
         <SignForm typeForm={'Sign In'} />
         <SignText>
-          <span>Not a member yet?</span> <Link to="signup"> Sign up </Link>
+          <span>Not a member yet?</span> <Link to={ `${routePaths.signUp}` }> Sign up </Link>
         </SignText>
       </SignFormContainer>
       

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { routePaths } from '../../helpers/constants/routePath'
 
 export interface CardProps {
   name: string;
@@ -20,7 +21,7 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <CardContainer>
-      <Link to={'/teams/' + id}>
+      <Link to={`${routePaths.teamItem}`}>
         <CardImg>
           <img src={'http://dev.trainee.dex-it.ru' + imgPath} alt=""/>
         </CardImg>

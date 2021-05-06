@@ -7,6 +7,7 @@ import Person from './img/person.svg'
 import Teams from './img/teams.svg'
 import Logout from './img/logout.svg'
 import { SidebarNav } from './SidebarNav';
+import { routePaths } from '../../helpers/constants/routePath'
 
 interface IProps {
   test?: string;
@@ -27,7 +28,7 @@ export const Sidebar = (props: IProps) => {
   return (
     <SidebarContainer>
       <SidebarRoute>
-        <Link to="/teams">
+        <Link to={ `${routePaths.teams}` }>
           <SidebarNav name={'Team'} isActive={location.pathname === '/teams'} link img={Teams}  />
         </Link>  
 
